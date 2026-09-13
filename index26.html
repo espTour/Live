@@ -1,0 +1,2504 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>ESP TOUR 2.0</title>
+
+<meta name="description" content="ESP TOUR 2.0 Official Tournament App">
+<meta name="theme-color" content="#ffffff">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:#ffffff;
+    color:#111;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* =====================================================
+   ANIMATED BACKGROUND
+===================================================== */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    z-index:-10;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(220,220,220,.55),
+            rgba(255,255,255,.95) 45%,
+            #ffffff 100%
+        );
+}
+
+/* soft blurred light blobs */
+
+.light{
+    position:absolute;
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    filter:blur(55px);
+    opacity:.35;
+    animation:
+        floatLight 13s infinite ease-in-out;
+}
+
+.light.one{
+    left:-80px;
+    bottom:-80px;
+    background:#ff3b81;
+    animation-delay:0s;
+}
+
+.light.two{
+    right:-80px;
+    bottom:10%;
+    background:#5b5cff;
+    animation-delay:2s;
+}
+
+.light.three{
+    left:30%;
+    bottom:-100px;
+    background:#00c8ff;
+    animation-delay:4s;
+}
+
+.light.four{
+    right:20%;
+    top:-100px;
+    background:#ffb000;
+    animation-delay:6s;
+}
+
+@keyframes floatLight{
+    0%{
+        transform:translate(0,100px) scale(.7);
+        opacity:.15;
+    }
+
+    25%{
+        transform:translate(80px,-130px) scale(1);
+        opacity:.35;
+    }
+
+    50%{
+        transform:translate(-80px,-280px) scale(1.15);
+        opacity:.28;
+    }
+
+    75%{
+        transform:translate(120px,-430px) scale(.85);
+        opacity:.35;
+    }
+
+    100%{
+        transform:translate(-50px,-650px) scale(.6);
+        opacity:0;
+    }
+}
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+.particles{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+}
+
+.particle{
+    position:absolute;
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#777;
+    opacity:0;
+    filter:blur(.5px);
+    box-shadow:
+        0 0 8px currentColor,
+        0 0 16px currentColor;
+
+    animation:particleUp linear infinite;
+}
+
+@keyframes particleUp{
+
+    0%{
+        transform:
+            translate3d(0,120vh,0)
+            scale(.3);
+        opacity:0;
+    }
+
+    10%{
+        opacity:.5;
+    }
+
+    35%{
+        opacity:.8;
+    }
+
+    70%{
+        opacity:.55;
+    }
+
+    100%{
+        transform:
+            translate3d(var(--move),-20vh,0)
+            scale(1.15);
+        opacity:0;
+    }
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.container{
+    width:min(94%,1050px);
+    margin:auto;
+}
+
+main{
+    position:relative;
+    z-index:1;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+    text-align:center;
+    padding:30px 0 5px;
+}
+
+.top-label{
+    display:inline-block;
+    padding:8px 15px;
+    border-radius:30px;
+
+    background:rgba(255,255,255,.75);
+    border:1px solid rgba(0,0,0,.10);
+
+    color:#666;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:3px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.07);
+
+    backdrop-filter:blur(14px);
+}
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo-box{
+    width:190px;
+    height:190px;
+
+    margin:22px auto 0;
+
+    padding:8px;
+
+    border-radius:34px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.98),
+            rgba(238,238,238,.72)
+        );
+
+    border:1px solid rgba(0,0,0,.13);
+
+    box-shadow:
+        0 25px 70px rgba(0,0,0,.15),
+        0 0 0 7px rgba(255,255,255,.60),
+        inset 0 1px 0 rgba(255,255,255,1);
+
+    backdrop-filter:blur(18px);
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.logo-box::before{
+    content:"";
+    position:absolute;
+    inset:-80%;
+
+    background:
+        conic-gradient(
+            transparent,
+            rgba(255,0,90,.20),
+            transparent,
+            rgba(0,140,255,.20),
+            transparent
+        );
+
+    animation:logoGlow 8s linear infinite;
+}
+
+.logo-box img{
+    position:relative;
+    z-index:2;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:27px;
+
+    display:block;
+}
+
+@keyframes logoGlow{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    text-align:center;
+    padding:28px 0 35px;
+}
+
+.hero h1{
+    font-size:
+        clamp(36px,8vw,70px);
+
+    font-weight:950;
+
+    line-height:1;
+
+    letter-spacing:-2px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #111 0%,
+            #555 25%,
+            #000 50%,
+            #777 75%,
+            #111 100%
+        );
+
+    background-size:250% auto;
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation:titleShine 6s linear infinite;
+}
+
+@keyframes titleShine{
+    to{
+        background-position:250% center;
+    }
+}
+
+.hero h2{
+    margin-top:13px;
+
+    font-size:
+        clamp(13px,3vw,19px);
+
+    color:#555;
+
+    font-weight:850;
+
+    letter-spacing:3px;
+}
+
+.hero p{
+    max-width:690px;
+
+    margin:18px auto 0;
+
+    color:#777;
+
+    font-size:15px;
+
+    line-height:1.75;
+}
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+.download-area{
+    text-align:center;
+    margin-bottom:55px;
+}
+
+.download-btn{
+    position:relative;
+
+    min-width:245px;
+
+    padding:17px 28px;
+
+    border:0;
+    border-radius:16px;
+
+    color:#fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #3b3b3b
+        );
+
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 16px 40px rgba(0,0,0,.22);
+
+    transition:.25s ease;
+}
+
+.download-btn::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:80%;
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.35),
+            transparent
+        );
+
+    transform:skewX(-20deg);
+
+    animation:buttonLight 3.5s infinite;
+}
+
+@keyframes buttonLight{
+    0%{
+        left:-120%;
+    }
+
+    45%,100%{
+        left:150%;
+    }
+}
+
+.download-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.28);
+}
+
+.download-btn:active{
+    transform:scale(.97);
+}
+
+.download-btn.loading{
+    pointer-events:none;
+    opacity:.8;
+}
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress-wrapper{
+    display:none;
+
+    width:min(90%,370px);
+
+    margin:18px auto 0;
+}
+
+.progress-wrapper.show{
+    display:block;
+}
+
+.progress-text{
+    margin-bottom:8px;
+
+    color:#777;
+
+    font-size:12px;
+    font-weight:700;
+}
+
+.progress-bar{
+    height:8px;
+
+    background:#eeeeee;
+
+    border:1px solid #ddd;
+
+    border-radius:30px;
+
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #111,
+            #777,
+            #111
+        );
+
+    background-size:200% 100%;
+
+    animation:progressGlow 2s linear infinite;
+
+    transition:width .08s linear;
+}
+
+@keyframes progressGlow{
+    to{
+        background-position:200% 0;
+    }
+}
+
+/* =====================================================
+   GLASS CARD
+===================================================== */
+
+.section{
+    padding:20px 0 60px;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.section-title h3{
+    font-size:26px;
+    font-weight:900;
+}
+
+.section-title span{
+    display:block;
+
+    width:55px;
+    height:3px;
+
+    margin:10px auto 0;
+
+    border-radius:20px;
+
+    background:#111;
+}
+
+.glass-card{
+    background:
+        rgba(255,255,255,.70);
+
+    border:1px solid rgba(0,0,0,.10);
+
+    border-radius:24px;
+
+    padding:25px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,.08);
+
+    backdrop-filter:
+        blur(22px);
+
+    -webkit-backdrop-filter:
+        blur(22px);
+}
+
+/* =====================================================
+   APP INFO
+===================================================== */
+
+.long-description{
+    color:#666;
+    font-size:15px;
+    line-height:1.75;
+}
+
+.info-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:14px;
+
+    margin-top:20px;
+}
+
+.info-item{
+    padding:18px;
+
+    border-radius:17px;
+
+    background:
+        rgba(255,255,255,.75);
+
+    border:1px solid rgba(0,0,0,.08);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.05);
+
+    transition:.25s;
+}
+
+.info-item:hover{
+    transform:translateY(-3px);
+}
+
+.info-item small{
+    display:block;
+
+    color:#999;
+
+    font-size:11px;
+
+    font-weight:700;
+
+    margin-bottom:6px;
+}
+
+.info-item strong{
+    color:#222;
+    font-size:15px;
+}
+
+/* =====================================================
+   EDITABLE CUSTOM BOXES
+===================================================== */
+
+.custom-boxes{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+}
+
+.custom-box{
+    padding:20px;
+
+    border-radius:19px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    border:1px solid rgba(0,0,0,.08);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.06);
+
+    transition:.25s;
+}
+
+.custom-box:hover{
+    transform:translateY(-4px);
+}
+
+.custom-icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.custom-box h4{
+    font-size:17px;
+    margin-bottom:7px;
+}
+
+.custom-box p{
+    color:#777;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+.features{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:16px;
+}
+
+.feature{
+    text-align:center;
+
+    padding:27px 16px;
+
+    border-radius:21px;
+
+    background:
+        rgba(255,255,255,.72);
+
+    border:1px solid rgba(0,0,0,.08);
+
+    box-shadow:
+        0 12px 40px rgba(0,0,0,.07);
+
+    transition:.3s;
+}
+
+.feature:hover{
+    transform:
+        translateY(-6px)
+        scale(1.01);
+}
+
+.feature-icon{
+    font-size:38px;
+    margin-bottom:13px;
+}
+
+.feature h4{
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.feature p{
+    color:#777;
+    font-size:13px;
+    line-height:1.55;
+}
+
+/* =====================================================
+   SCREENSHOTS
+===================================================== */
+
+.screenshots{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+.screenshot{
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:21px;
+
+    background:#f2f2f2;
+
+    border:1px solid rgba(0,0,0,.10);
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.10);
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.screenshot:hover{
+    transform:
+        translateY(-6px)
+        scale(1.015);
+}
+
+.screenshot::after{
+    content:"View";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.7);
+
+    opacity:0;
+
+    background:
+        rgba(0,0,0,.72);
+
+    color:white;
+
+    padding:10px 17px;
+
+    border-radius:30px;
+
+    font-size:12px;
+    font-weight:800;
+
+    transition:.25s;
+}
+
+.screenshot:hover::after{
+    opacity:1;
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+}
+
+.screenshot img{
+    width:100%;
+
+    aspect-ratio:9/16;
+
+    object-fit:cover;
+
+    display:block;
+}
+
+.empty-preview{
+    grid-column:1/-1;
+
+    text-align:center;
+
+    padding:45px 20px;
+
+    color:#888;
+
+    background:
+        rgba(255,255,255,.65);
+
+    border:
+        1px dashed #bbb;
+
+    border-radius:18px;
+}
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(255,255,255,.82);
+
+    backdrop-filter:blur(22px);
+
+    z-index:9999;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal img{
+    max-width:95%;
+    max-height:88vh;
+
+    object-fit:contain;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.30);
+}
+
+.close-modal{
+    position:fixed;
+
+    top:18px;
+    right:18px;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    border:1px solid #ccc;
+
+    background:#fff;
+
+    color:#111;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.12);
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+    text-align:center;
+
+    padding:35px 15px 45px;
+
+    border-top:1px solid rgba(0,0,0,.08);
+
+    color:#888;
+
+    font-size:12px;
+
+    line-height:1.7;
+}
+
+footer strong{
+    color:#222;
+}
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+.toast{
+    position:fixed;
+
+    left:50%;
+    bottom:25px;
+
+    transform:
+        translate(-50%,100px);
+
+    opacity:0;
+
+    background:#111;
+
+    color:#fff;
+
+    padding:13px 20px;
+
+    border-radius:14px;
+
+    font-size:13px;
+    font-weight:700;
+
+    z-index:10000;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.25);
+
+    transition:.3s;
+}
+
+.toast.show{
+    transform:
+        translate(-50%,0);
+
+    opacity:1;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    header{
+        padding-top:24px;
+    }
+
+    .logo-box{
+        width:165px;
+        height:165px;
+        border-radius:29px;
+    }
+
+    .hero{
+        padding-top:25px;
+    }
+
+    .hero h1{
+        letter-spacing:-1.5px;
+    }
+
+    .hero p{
+        font-size:14px;
+    }
+
+    .glass-card{
+        padding:19px;
+        border-radius:20px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .custom-boxes{
+        grid-template-columns:1fr;
+    }
+
+    .screenshots{
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:12px;
+    }
+
+    .section{
+        padding-bottom:45px;
+    }
+}
+
+@media(max-width:390px){
+
+    .logo-box{
+        width:150px;
+        height:150px;
+    }
+
+    .download-btn{
+        width:90%;
+    }
+
+    .screenshots{
+        gap:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     ANIMATED BACKGROUND
+===================================================== -->
+
+<div class="background">
+
+    <div class="light one"></div>
+    <div class="light two"></div>
+    <div class="light three"></div>
+    <div class="light four"></div>
+
+    <div
+        class="particles"
+        id="particles"
+    ></div>
+
+</div>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+    <div class="container">
+
+        <div
+            class="top-label"
+            id="topLabel"
+        >
+            OFFICIAL TOURNAMENT APP
+        </div>
+
+        <div class="logo-box">
+
+            <img
+                id="appLogo"
+                src="https://i.ibb.co.com/2YR74gdt/IMG-20260905-WA0015.jpg"
+                alt="ESP TOUR 2.0"
+            >
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main>
+
+<div class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <h1 id="appName">
+            ESP TOUR 2.0
+        </h1>
+
+        <h2 id="appTagline">
+            ESP OFFICIAL TOURNAMENT
+        </h2>
+
+        <p id="appDescription">
+            Join exciting tournaments, compete with players
+            and enjoy the ultimate tournament experience.
+        </p>
+
+    </section>
+
+
+    <!-- DOWNLOAD -->
+
+    <div class="download-area">
+
+        <button
+            class="download-btn"
+            id="downloadBtn"
+            onclick="downloadApp()"
+        >
+            <span>⬇</span>
+            <span id="downloadButtonText">
+                DOWNLOAD APP
+            </span>
+        </button>
+
+        <div
+            class="progress-wrapper"
+            id="progressWrapper"
+        >
+
+            <div
+                class="progress-text"
+                id="progressText"
+            >
+                Preparing download... 0%
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="progressFill"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         APP INFORMATION
+    ================================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h3 id="informationTitle">
+                App Information
+            </h3>
+
+            <span></span>
+
+        </div>
+
+        <div class="glass-card">
+
+            <p
+                class="long-description"
+                id="longDescription"
+            >
+                ESP TOUR 2.0 is an official tournament
+                platform designed for players who love
+                competitive gaming.
+            </p>
+
+
+            <div class="info-grid">
+
+                <div class="info-item">
+
+                    <small id="labelAppName">
+                        App Name
+                    </small>
+
+                    <strong id="infoName">
+                        ESP TOUR 2.0
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <small id="labelVersion">
+                        Version
+                    </small>
+
+                    <strong id="appVersion">
+                        Latest Version
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <small id="labelPlatform">
+                        Platform
+                    </small>
+
+                    <strong id="appPlatform">
+                        Android
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <small id="labelCategory">
+                        Category
+                    </small>
+
+                    <strong id="appCategory">
+                        Tournament
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CUSTOM ADMIN BOXES
+    ================================================= -->
+
+    <section
+        class="section"
+        id="customSection"
+    >
+
+        <div class="section-title">
+
+            <h3 id="customSectionTitle">
+                More Information
+            </h3>
+
+            <span></span>
+
+        </div>
+
+        <div
+            class="custom-boxes"
+            id="customBoxes"
+        ></div>
+
+    </section>
+
+
+    <!-- =================================================
+         FEATURES
+    ================================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h3 id="featuresTitle">
+                Why ESP TOUR 2.0?
+            </h3>
+
+            <span></span>
+
+        </div>
+
+
+        <div
+            class="features"
+            id="features"
+        ></div>
+
+    </section>
+
+
+    <!-- =================================================
+         SCREENSHOTS
+    ================================================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h3 id="previewTitle">
+                App Preview
+            </h3>
+
+            <span></span>
+
+        </div>
+
+
+        <div
+            class="screenshots"
+            id="screenshots"
+        >
+
+            <div class="empty-preview">
+                Loading app previews...
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong id="footerName">
+        ESP TOUR 2.0
+    </strong>
+
+    <br>
+
+    <span id="footerText">
+        Official Tournament App
+    </span>
+
+    <br><br>
+
+    © <span id="year"></span>
+    <span id="footerCopyright">
+        ESP TOUR 2.0. All Rights Reserved.
+    </span>
+
+</footer>
+
+
+<!-- =====================================================
+     IMAGE MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="imageModal"
+    onclick="closeImage()"
+>
+
+    <button
+        class="close-modal"
+        onclick="event.stopPropagation();closeImage();"
+    >
+        ×
+    </button>
+
+    <img
+        id="modalImage"
+        src=""
+        alt="App Preview"
+        onclick="event.stopPropagation()"
+    >
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<!-- =====================================================
+     FIREBASE
+===================================================== -->
+
+<script type="module">
+
+import {
+    initializeApp
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+
+import {
+    getDatabase,
+    ref,
+    onValue
+}
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDDXsJwKLlTU6LofulL1h7zbN23Qf_endM",
+
+    authDomain:
+        "esp--ff.firebaseapp.com",
+
+    databaseURL:
+        "https://esp--ff-default-rtdb.firebaseio.com",
+
+    projectId:
+        "esp--ff",
+
+    storageBucket:
+        "esp--ff.firebasestorage.app",
+
+    messagingSenderId:
+        "364592477150",
+
+    appId:
+        "1:364592477150:web:e26f823c1372f51bb1234f",
+
+    measurementId:
+        "G-663DCHW8P2"
+};
+
+
+/* =====================================================
+   INITIALIZE FIREBASE
+===================================================== */
+
+const app =
+    initializeApp(firebaseConfig);
+
+const db =
+    getDatabase(app);
+
+
+/* =====================================================
+   DEFAULT DATA
+===================================================== */
+
+let downloadLink = "";
+
+let appData = {
+
+    appName:
+        "ESP TOUR 2.0",
+
+    tagline:
+        "ESP OFFICIAL TOURNAMENT",
+
+    topLabel:
+        "OFFICIAL TOURNAMENT APP",
+
+    description:
+        "Join exciting tournaments, compete with players and enjoy the ultimate tournament experience.",
+
+    longDescription:
+        "ESP TOUR 2.0 is an official tournament platform designed for players who love competitive gaming.",
+
+    version:
+        "Latest Version",
+
+    platform:
+        "Android",
+
+    category:
+        "Tournament",
+
+    logo:
+        "https://i.ibb.co.com/2YR74gdt/IMG-20260905-WA0015.jpg",
+
+    downloadButtonText:
+        "DOWNLOAD APP",
+
+    informationTitle:
+        "App Information",
+
+    featuresTitle:
+        "Why ESP TOUR 2.0?",
+
+    customSectionTitle:
+        "More Information",
+
+    previewTitle:
+        "App Preview",
+
+    footerText:
+        "Official Tournament App",
+
+    footerCopyright:
+        "ESP TOUR 2.0. All Rights Reserved.",
+
+    screenshots: [],
+
+    customBoxes: [],
+
+    features: []
+
+};
+
+
+/* =====================================================
+   DEFAULT FEATURES
+===================================================== */
+
+const defaultFeatures = [
+
+    {
+        icon:"🏆",
+        title:"Competitive Tournaments",
+        description:
+            "Join tournaments and compete with other players."
+    },
+
+    {
+        icon:"⚡",
+        title:"Fast Experience",
+        description:
+            "Enjoy a simple and fast tournament experience."
+    },
+
+    {
+        icon:"🎮",
+        title:"Gaming Community",
+        description:
+            "Connect with competitive gaming players."
+    }
+
+];
+
+
+/* =====================================================
+   FIREBASE LISTENER
+===================================================== */
+
+const landingRef =
+    ref(db,"landingPage");
+
+
+onValue(
+    landingRef,
+
+    (snapshot)=>{
+
+        const data =
+            snapshot.val();
+
+        if(data){
+
+            appData = {
+
+                ...appData,
+                ...data
+
+            };
+
+            downloadLink =
+                data.downloadLink || "";
+
+        }
+
+        renderPage();
+
+    },
+
+    (error)=>{
+
+        console.error(
+            "Firebase error:",
+            error
+        );
+
+        renderPage();
+
+    }
+);
+
+
+/* =====================================================
+   RENDER PAGE
+===================================================== */
+
+function renderPage(){
+
+    const name =
+        appData.appName ||
+        "ESP TOUR 2.0";
+
+
+    document.title =
+        name;
+
+
+    setText(
+        "appName",
+        name
+    );
+
+
+    setText(
+        "infoName",
+        name
+    );
+
+
+    setText(
+        "footerName",
+        name
+    );
+
+
+    setText(
+        "appTagline",
+        appData.tagline ||
+        "ESP OFFICIAL TOURNAMENT"
+    );
+
+
+    setText(
+        "topLabel",
+        appData.topLabel ||
+        "OFFICIAL TOURNAMENT APP"
+    );
+
+
+    setText(
+        "appDescription",
+        appData.description || ""
+    );
+
+
+    setText(
+        "longDescription",
+        appData.longDescription || ""
+    );
+
+
+    setText(
+        "appVersion",
+        appData.version ||
+        "Latest Version"
+    );
+
+
+    setText(
+        "appPlatform",
+        appData.platform ||
+        "Android"
+    );
+
+
+    setText(
+        "appCategory",
+        appData.category ||
+        "Tournament"
+    );
+
+
+    setText(
+        "downloadButtonText",
+        appData.downloadButtonText ||
+        "DOWNLOAD APP"
+    );
+
+
+    setText(
+        "informationTitle",
+        appData.informationTitle ||
+        "App Information"
+    );
+
+
+    setText(
+        "featuresTitle",
+        appData.featuresTitle ||
+        "Why ESP TOUR 2.0?"
+    );
+
+
+    setText(
+        "customSectionTitle",
+        appData.customSectionTitle ||
+        "More Information"
+    );
+
+
+    setText(
+        "previewTitle",
+        appData.previewTitle ||
+        "App Preview"
+    );
+
+
+    setText(
+        "footerText",
+        appData.footerText ||
+        "Official Tournament App"
+    );
+
+
+    setText(
+        "footerCopyright",
+        appData.footerCopyright ||
+        "ESP TOUR 2.0. All Rights Reserved."
+    );
+
+
+    const logo =
+        appData.logo ||
+        "https://i.ibb.co.com/2YR74gdt/IMG-20260905-WA0015.jpg";
+
+
+    document.getElementById(
+        "appLogo"
+    ).src = logo;
+
+
+    renderCustomBoxes();
+
+    renderFeatures();
+
+    renderScreenshots();
+
+}
+
+
+/* =====================================================
+   SET TEXT
+===================================================== */
+
+function setText(id,value){
+
+    const element =
+        document.getElementById(id);
+
+    if(element){
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+/* =====================================================
+   CUSTOM ADMIN BOXES
+===================================================== */
+
+function renderCustomBoxes(){
+
+    const box =
+        document.getElementById(
+            "customBoxes"
+        );
+
+
+    box.innerHTML = "";
+
+
+    let items =
+        Array.isArray(
+            appData.customBoxes
+        )
+        ?
+        appData.customBoxes
+        :
+        [];
+
+
+    if(!items.length){
+
+        items = [
+
+            {
+                icon:"🎯",
+                title:"Join Tournaments",
+                description:
+                    "Find and join exciting tournaments."
+            },
+
+            {
+                icon:"💎",
+                title:"Exclusive Events",
+                description:
+                    "Take part in special competitive events."
+            }
+
+        ];
+
+    }
+
+
+    items.forEach(
+        (item)=>{
+
+            if(!item) return;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "custom-box";
+
+
+            card.innerHTML = `
+
+                <div class="custom-icon">
+                    ${escapeHTML(
+                        item.icon || "⭐"
+                    )}
+                </div>
+
+                <h4>
+                    ${escapeHTML(
+                        item.title ||
+                        "Information"
+                    )}
+                </h4>
+
+                <p>
+                    ${escapeHTML(
+                        item.description ||
+                        ""
+                    )}
+                </p>
+
+            `;
+
+
+            box.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+function renderFeatures(){
+
+    const box =
+        document.getElementById(
+            "features"
+        );
+
+
+    box.innerHTML = "";
+
+
+    let items =
+        Array.isArray(
+            appData.features
+        )
+        ?
+        appData.features
+        :
+        [];
+
+
+    if(!items.length){
+
+        items =
+            defaultFeatures;
+
+    }
+
+
+    items.forEach(
+        (item)=>{
+
+            if(!item) return;
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+            card.className =
+                "feature";
+
+
+            card.innerHTML = `
+
+                <div class="feature-icon">
+                    ${escapeHTML(
+                        item.icon || "⭐"
+                    )}
+                </div>
+
+                <h4>
+                    ${escapeHTML(
+                        item.title ||
+                        "Feature"
+                    )}
+                </h4>
+
+                <p>
+                    ${escapeHTML(
+                        item.description ||
+                        ""
+                    )}
+                </p>
+
+            `;
+
+
+            box.appendChild(card);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SCREENSHOTS
+===================================================== */
+
+function renderScreenshots(){
+
+    const box =
+        document.getElementById(
+            "screenshots"
+        );
+
+
+    box.innerHTML = "";
+
+
+    let images =
+        Array.isArray(
+            appData.screenshots
+        )
+        ?
+        appData.screenshots
+        :
+        [];
+
+
+    if(!images.length){
+
+        box.innerHTML = `
+
+            <div class="empty-preview">
+
+                No app preview has been added yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    images.forEach(
+        (image)=>{
+
+            let url = "";
+
+
+            if(
+                typeof image ===
+                "string"
+            ){
+
+                url = image;
+
+            }
+
+            else if(
+                image &&
+                typeof image ===
+                "object"
+            ){
+
+                url =
+                    image.url ||
+                    image.image ||
+                    "";
+
+            }
+
+
+            if(!url) return;
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "screenshot";
+
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+
+            img.src =
+                url;
+
+            img.alt =
+                "ESP TOUR 2.0 App Preview";
+
+            img.loading =
+                "lazy";
+
+
+            item.appendChild(img);
+
+
+            item.onclick =
+                ()=>{
+                    openImage(url);
+                };
+
+
+            box.appendChild(item);
+
+        }
+    );
+
+
+    if(!box.children.length){
+
+        box.innerHTML = `
+
+            <div class="empty-preview">
+
+                No valid preview image found.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   DOWNLOAD
+===================================================== */
+
+window.downloadApp =
+function(){
+
+    if(!downloadLink){
+
+        showToast(
+            "Download link is not available yet."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "downloadBtn"
+        );
+
+
+    const wrapper =
+        document.getElementById(
+            "progressWrapper"
+        );
+
+
+    const fill =
+        document.getElementById(
+            "progressFill"
+        );
+
+
+    const text =
+        document.getElementById(
+            "progressText"
+        );
+
+
+    button.classList.add(
+        "loading"
+    );
+
+
+    wrapper.classList.add(
+        "show"
+    );
+
+
+    let progress = 0;
+
+
+    const timer =
+        setInterval(
+            ()=>{
+
+                progress +=
+                    Math.floor(
+                        Math.random()*7
+                    ) + 4;
+
+
+                if(
+                    progress >= 100
+                ){
+
+                    progress = 100;
+
+                }
+
+
+                fill.style.width =
+                    progress + "%";
+
+
+                text.textContent =
+                    "Preparing download... " +
+                    progress +
+                    "%";
+
+
+                if(
+                    progress >= 100
+                ){
+
+                    clearInterval(timer);
+
+
+                    text.textContent =
+                        "Starting download...";
+
+
+                    setTimeout(
+                        ()=>{
+
+                            startDownload(
+                                downloadLink
+                            );
+
+
+                            button.classList.remove(
+                                "loading"
+                            );
+
+                        },
+                        500
+                    );
+
+                }
+
+            },
+            80
+        );
+
+};
+
+
+/* =====================================================
+   START DOWNLOAD
+===================================================== */
+
+function startDownload(url){
+
+    try{
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            url;
+
+
+        link.target =
+            "_blank";
+
+
+        link.rel =
+            "noopener noreferrer";
+
+
+        link.download =
+            "";
+
+
+        document.body.appendChild(
+            link
+        );
+
+
+        link.click();
+
+
+        link.remove();
+
+    }
+
+    catch(error){
+
+        console.error(
+            error
+        );
+
+
+        window.open(
+            url,
+            "_blank"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   IMAGE VIEWER
+===================================================== */
+
+window.openImage =
+function(url){
+
+    document.getElementById(
+        "modalImage"
+    ).src = url;
+
+
+    document.getElementById(
+        "imageModal"
+    ).classList.add(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+};
+
+
+window.closeImage =
+function(){
+
+    document.getElementById(
+        "imageModal"
+    ).classList.remove(
+        "show"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+};
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        ()=>{
+            toast.classList.remove(
+                "show"
+            );
+        },
+        3000
+    );
+
+}
+
+
+/* =====================================================
+   HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   BACKGROUND PARTICLES
+===================================================== */
+
+function createParticles(){
+
+    const container =
+        document.getElementById(
+            "particles"
+        );
+
+
+    const colors = [
+
+        "#ff3b81",
+        "#5b5cff",
+        "#00aeea",
+        "#ff9f00",
+        "#111111",
+        "#00b894"
+
+    ];
+
+
+    for(
+        let i=0;
+        i<45;
+        i++
+    ){
+
+        const particle =
+            document.createElement(
+                "span"
+            );
+
+
+        particle.className =
+            "particle";
+
+
+        particle.style.left =
+            Math.random()*100 +
+            "%";
+
+
+        particle.style.setProperty(
+            "--move",
+            (
+                Math.random()*240 -
+                120
+            ) + "px"
+        );
+
+
+        particle.style.animationDuration =
+            (
+                7 +
+                Math.random()*10
+            ) + "s";
+
+
+        particle.style.animationDelay =
+            (
+                Math.random()*10
+            ) + "s";
+
+
+        const color =
+            colors[
+                Math.floor(
+                    Math.random() *
+                    colors.length
+                )
+            ];
+
+
+        particle.style.color =
+            color;
+
+
+        particle.style.background =
+            color;
+
+
+        const size =
+            3 +
+            Math.random()*5;
+
+
+        particle.style.width =
+            size + "px";
+
+
+        particle.style.height =
+            size + "px";
+
+
+        container.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+createParticles();
+
+
+/* =====================================================
+   YEAR
+===================================================== */
+
+document.getElementById(
+    "year"
+).textContent =
+    new Date().getFullYear();
+
+
+/* =====================================================
+   ESCAPE MODAL
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    (event)=>{
+
+        if(
+            event.key ===
+            "Escape"
+        ){
+
+            closeImage();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
